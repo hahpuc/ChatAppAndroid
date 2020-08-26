@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
             // Access objects
             Log.d("MainActivity","Email is: " + email)
             Log.d("MainActivity","Password is: + $password")
+
+            // Firebase Authentication to create a user with email and password
+            
         }
 
         // Change to login screen
