@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CCF0FE"
-    tools:context=".MainActivity">
+    tools:context=".RegisterActivity">
 
     <EditText
         android:id="@+id/username_edittext_register"
@@ -16,8 +16,8 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:background="@android:color/background_light"
         android:ems="10"
+        android:background="@drawable/rounded_edittext_register_logi"
         android:hint="Username"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
@@ -30,7 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
-        android:background="@android:color/background_light"
+        android:background="@drawable/rounded_edittext_register_logi"
         android:ems="10"
         android:paddingLeft="20dp"
         android:hint="Email"
@@ -44,7 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
-        android:background="@android:color/background_light"
+        android:background="@drawable/rounded_edittext_register_logi"
         android:ems="10"
         android:hint="Password"
         android:paddingLeft="20dp"
@@ -59,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Register"
+        android:background="@drawable/rounded_button_register_login"
         app:layout_constraintEnd_toEndOf="@+id/password_edittext_register"
         app:layout_constraintStart_toStartOf="@+id/password_edittext_register"
         app:layout_constraintTop_toBottomOf="@+id/password_edittext_register" />

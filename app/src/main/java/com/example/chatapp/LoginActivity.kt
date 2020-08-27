@@ -3,6 +3,7 @@ package com.example.chatapp
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -16,6 +17,15 @@ class LoginActivity : AppCompatActivity() {
             val password = password_edittext_login.text.toString()
 
             Log.d("LoginActivity", "Login with email/pw: $email / $password ")
+
+            // FirebaseAuth to signIn email/password
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener {
+                    Log.d("Login", "Successfully to login ")
+                }
+                .addOnFailureListener {
+                    Log.d("Login",  "Failed to login")
+                }
         }
 
         back_to_registration_text_view.setOnClickListener {
