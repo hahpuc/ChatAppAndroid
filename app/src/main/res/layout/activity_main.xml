@@ -16,14 +16,14 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:ems="10"
         android:background="@drawable/rounded_edittext_register_logi"
+        android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/selectphoto_button_register" />
 
     <EditText
         android:id="@+id/email_edittext_register"
@@ -79,4 +79,15 @@
         app:layout_constraintEnd_toEndOf="@+id/register_button_register"
         app:layout_constraintStart_toStartOf="@+id/register_button_register"
         app:layout_constraintTop_toBottomOf="@+id/register_button_register" />
+
+    <Button
+        android:id="@+id/selectphoto_button_register"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/rounded_photo_register_login"
+        android:text="SELECT PHOTO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
