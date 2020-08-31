@@ -137,9 +137,15 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.setValue(user)
             .addOnSuccessListener {
-                Log.d("SaveUser", "Finally we saved the user  to Firebase")
-            }
+                Log.d("RegisterActivity", "Finally we saved the user  to Firebase")
 
+                val intent = Intent(this, LatestMessageActivity::class.java)
+
+                // Login to user's messages, so you can't back to the register/login screen.
+                // When you open this app, you see the LastestMessageActivity
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
     }
 }
 
