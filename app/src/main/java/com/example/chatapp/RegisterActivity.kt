@@ -150,5 +150,6 @@ class RegisterActivity : AppCompatActivity() {
 }
 
 class User(val uid: String, val userName: String, val profileImageURL: String) {
+    constructor(): this ("","","")
 
 }
