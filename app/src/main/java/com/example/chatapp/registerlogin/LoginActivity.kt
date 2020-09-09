@@ -1,8 +1,9 @@
-package com.example.chatapp
+package com.example.chatapp.registerlogin
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.chatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 

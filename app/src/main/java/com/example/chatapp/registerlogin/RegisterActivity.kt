@@ -1,14 +1,16 @@
-package com.example.chatapp
+package com.example.chatapp.registerlogin
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.chatapp.R
+import com.example.chatapp.models.User
+import com.example.chatapp.messages.LatestMessageActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -133,7 +135,11 @@ class RegisterActivity : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().uid?: ""
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
 
-        val user = User(uid, username_edittext_register.text.toString(), profileImageURL)
+        val user = User(
+            uid,
+            username_edittext_register.text.toString(),
+            profileImageURL
+        )
 
         ref.setValue(user)
             .addOnSuccessListener {
@@ -149,7 +155,3 @@ class RegisterActivity : AppCompatActivity() {
     }
 }
 
-class User(val uid: String, val userName: String, val profileImageURL: String) {
-    constructor(): this ("","","")
-
-}

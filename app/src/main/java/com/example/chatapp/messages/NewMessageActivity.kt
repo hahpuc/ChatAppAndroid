@@ -1,15 +1,15 @@
-package com.example.chatapp
+package com.example.chatapp.messages
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
+import com.example.chatapp.R
+import com.example.chatapp.models.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -25,6 +25,10 @@ class NewMessageActivity : AppCompatActivity() {
 
         // Fetch User
         fetchUser()
+    }
+
+    companion object {
+        val USER_KEY = "USER_KEY"
     }
 
     private fun fetchUser() {
@@ -45,6 +49,17 @@ class NewMessageActivity : AppCompatActivity() {
                         adapter.add(UserItem(user))
                 }
 
+                adapter.setOnItemClickListener { item, view ->
+                    val userItem = item as UserItem
+
+                    val intent = Intent(view.context, ChatLogActivity::class.java)
+                    //intent.putExtra(USER_KEY, userItem.user.userName)
+                    intent.putExtra(USER_KEY, userItem.user)
+                    startActivity(intent)
+
+                    finish()
+                }
+
                 recycleview_newmessage.adapter = adapter
             }
 
@@ -61,7 +76,7 @@ class UserItem(val user: User): Item<ViewHolder>() {
         viewHolder.itemView.username_textview_newmessage.text = user.userName
 
         // Get user's avatar
-        Picasso.get().load(user.profileImageURL).into(viewHolder.itemView.userphoto_newmessage)
+        //Picasso.get().load(user.profileImageURL).into(viewHolder.itemView.userphoto_newmessage)
     }
     override fun getLayout(): Int {
         return R.layout.user_row_new_message
@@ -71,5 +86,5 @@ class UserItem(val user: User): Item<ViewHolder>() {
 //class CustomAdapter: RecyclerView.Adapter<ViewHolder> {
 //    override fun onBindViewHolder(holder: ViewHol der, position: Int) {
 //        TODO("Not yet implemented")
-//    }
+//    } 
 //}

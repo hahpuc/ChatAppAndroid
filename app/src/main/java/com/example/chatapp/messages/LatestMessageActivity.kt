@@ -1,13 +1,13 @@
-package com.example.chatapp
+package com.example.chatapp.messages
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.example.chatapp.R
+import com.example.chatapp.registerlogin.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 
 class LatestMessageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
