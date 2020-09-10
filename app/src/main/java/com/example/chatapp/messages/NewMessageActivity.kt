@@ -47,7 +47,7 @@ class NewMessageActivity : AppCompatActivity() {
                     Log.d("NewMessage", it.toString())
 
                     val user = it.getValue(User::class.java)
-                    if (user != null)
+                    if (user != null  && user.uid != LatestMessageActivity.currentUser!!.uid)
                         adapter.add(UserItem(user))
                 }
 

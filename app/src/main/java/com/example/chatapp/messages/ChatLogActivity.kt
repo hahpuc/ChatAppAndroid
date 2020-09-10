@@ -49,7 +49,10 @@ class ChatLogActivity : AppCompatActivity() {
     }
 
     private fun listenForMessages() {
-        val reference = FirebaseDatabase.getInstance().getReference("/messages")
+
+        val fromID = FirebaseAuth.getInstance().uid
+        val toID = toUser?.uid
+        val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromID/$toID")
 
         reference.addChildEventListener(object : ChildEventListener{
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -59,8 +62,8 @@ class ChatLogActivity : AppCompatActivity() {
                     Log.d(TAG, chatMessage.text)
 
                     if (chatMessage.fromID == FirebaseAuth.getInstance().uid) {
-                        val fromUser = LatestMessageActivity.currentUser
-                        adapter.add(ChatFromItem(chatMessage.text, fromUser!!))
+                        val fromUser = LatestMessageActivity.currentUser?: return
+                        adapter.add(ChatFromItem(chatMessage.text, fromUser))
                     } else {
                         adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
@@ -99,12 +102,20 @@ class ChatLogActivity : AppCompatActivity() {
 
         if (fromID == null) return
 
-        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
+//        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
+        val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromID/$toID").push()
+        val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toID/$fromID").push()
+
         val chatMessage = ChatMessage(reference.key!!, text, fromID, toID, System.currentTimeMillis()/1000)
 
         reference.setValue(chatMessage).addOnSuccessListener {
             Log.d(TAG, "Save our chat message: ${reference.key}")
+
+            edittext_chat_log.text.clear()
+            recycleview_chat_log.scrollToPosition(adapter.itemCount - 1)
         }
+
+        toReference.setValue(chatMessage).addOnSuccessListener {  }
     }
 
 //    private fun setUpDummyData() {
