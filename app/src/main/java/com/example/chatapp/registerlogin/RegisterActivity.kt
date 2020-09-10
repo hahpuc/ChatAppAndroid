@@ -119,14 +119,11 @@ class RegisterActivity : AppCompatActivity() {
 
                 ref.downloadUrl.addOnSuccessListener {
                     Log.d("RegisterActivity", "File location: $it")
+                    saveUsertoFirebase(it.toString())
                 }
-
-                saveUsertoFirebase(it.toString())
-
             }
             .addOnFailureListener {
                 Toast.makeText(this,"Fail to create user  ${it.message}", Toast.LENGTH_SHORT).show()
-
             }
 
     }

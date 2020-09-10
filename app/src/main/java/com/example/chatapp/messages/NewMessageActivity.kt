@@ -13,6 +13,8 @@ import com.google.firebase.database.ValueEventListener
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
+import com.squareup.picasso.Picasso
+
 import kotlinx.android.synthetic.main.activity_new_message.*
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
 
@@ -76,7 +78,7 @@ class UserItem(val user: User): Item<ViewHolder>() {
         viewHolder.itemView.username_textview_newmessage.text = user.userName
 
         // Get user's avatar
-        //Picasso.get().load(user.profileImageURL).into(viewHolder.itemView.userphoto_newmessage)
+        Picasso.get().load(user.profileImageURL).into(viewHolder.itemView.userphoto_newmessage)
     }
     override fun getLayout(): Int {
         return R.layout.user_row_new_message
