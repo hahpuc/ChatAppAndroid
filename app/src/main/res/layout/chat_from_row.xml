@@ -7,20 +7,6 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:text="Em ơi anh muốn địt em thì em có cho anh không hả em?"
-        android:maxWidth="250dp"
-        android:background="@drawable/rounded_edittext_register_logi"
-        android:padding="16dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        tools:ignore="MissingConstraints" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="50dp"
@@ -31,5 +17,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/btn_star_big_on" />
+
+    <TextView
+        android:id="@+id/textView_from_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/rounded_edittext_register_logi"
+        android:textColor="@android:color/black"
+        android:maxWidth="250dp"
+        android:padding="16dp"
+        android:text="Em ơi mình cùng nhau lên giường với nhau đêm nay nha"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
