@@ -105,6 +105,9 @@ class ChatLogActivity : AppCompatActivity() {
 //        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
         val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromID/$toID").push()
         val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toID/$fromID").push()
+        val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromID/$toID")
+        val toLatestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toID/$fromID")
+
 
         val chatMessage = ChatMessage(reference.key!!, text, fromID, toID, System.currentTimeMillis()/1000)
 
@@ -115,7 +118,10 @@ class ChatLogActivity : AppCompatActivity() {
             recycleview_chat_log.scrollToPosition(adapter.itemCount - 1)
         }
 
-        toReference.setValue(chatMessage).addOnSuccessListener {  }
+        toReference.setValue(chatMessage)
+
+        latestMessageRef.setValue(chatMessage)
+        toLatestMessageRef.setValue(chatMessage)
     }
 
 //    private fun setUpDummyData() {

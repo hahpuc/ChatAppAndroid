@@ -7,13 +7,17 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.example.chatapp.R
+import com.example.chatapp.models.ChatMessage
 import com.example.chatapp.models.User
 import com.example.chatapp.registerlogin.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
+import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.activity_latest_message.*
+import kotlinx.android.synthetic.main.latest_message_row.*
+import kotlinx.android.synthetic.main.latest_message_row.view.*
 
 class LatestMessageActivity : AppCompatActivity() {
 
@@ -21,14 +25,68 @@ class LatestMessageActivity : AppCompatActivity() {
         var currentUser: User? = null
     }
 
+    val adapter = GroupAdapter<ViewHolder>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_latest_message)
 
+        recycleview_latest_messages.adapter = adapter
+
+//        setUpDummyRow()
         fetchCurrentUser()
+        listenForLatestMessages()
 
         // if user logged in, it would show the latestMessageActivity
         verifyUserIsLoggedIn()
+    }
+
+    val latestMessageMap = HashMap<String, ChatMessage>()
+
+    private fun refreshRecycleViewMessages() {
+        adapter.clear()
+
+        latestMessageMap.values.forEach {
+            adapter.add(LatestMessageRow(it))
+        }
+    }
+
+    private fun listenForLatestMessages() {
+        val fromID = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("latest-messages/$fromID")
+
+        ref.addChildEventListener(object: ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+
+                val chatMessage = snapshot.getValue(ChatMessage::class.java)?: return
+
+                latestMessageMap[snapshot.key!!] = chatMessage
+                refreshRecycleViewMessages()
+
+            }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+                val chatMessage = snapshot.getValue(ChatMessage::class.java)?: return
+
+                latestMessageMap[snapshot.key!!] = chatMessage
+                refreshRecycleViewMessages()
+
+            }
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+
+    class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>() {
+        override fun getLayout(): Int {
+            return R.layout.latest_message_row
+        }
+
+        override fun bind(viewHolder: ViewHolder, position: Int) {
+            viewHolder.itemView.textView_latest_message.text = chatMessage.text
+        }
     }
 
     private fun fetchCurrentUser() {
