@@ -6,12 +6,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.chatapp.R
 import com.example.chatapp.models.ChatMessage
 import com.example.chatapp.models.User
 import com.example.chatapp.registerlogin.RegisterActivity
+import com.example.chatapp.views.LatestMessageRow
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -23,6 +26,7 @@ class LatestMessageActivity : AppCompatActivity() {
 
     companion object {
         var currentUser: User? = null
+        var TAG = "LatestMessage"
     }
 
     val adapter = GroupAdapter<ViewHolder>()
@@ -32,8 +36,20 @@ class LatestMessageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_latest_message)
 
         recycleview_latest_messages.adapter = adapter
+        recycleview_latest_messages.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
-//        setUpDummyRow()
+        // Set item click listener on your adapter
+        adapter.setOnItemClickListener { item, view ->
+            Log.d(TAG,"123")
+
+            val intent = Intent(this, ChatLogActivity::class.java)
+
+            val row = item as LatestMessageRow
+            intent.putExtra(NewMessageActivity.USER_KEY, row.chatPartnerUser)
+            startActivity(intent)
+        }
+
+        //setUpDummyRow()
         fetchCurrentUser()
         listenForLatestMessages()
 
@@ -63,6 +79,7 @@ class LatestMessageActivity : AppCompatActivity() {
                 latestMessageMap[snapshot.key!!] = chatMessage
                 refreshRecycleViewMessages()
 
+
             }
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
 
@@ -79,15 +96,7 @@ class LatestMessageActivity : AppCompatActivity() {
     }
 
 
-    class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>() {
-        override fun getLayout(): Int {
-            return R.layout.latest_message_row
-        }
 
-        override fun bind(viewHolder: ViewHolder, position: Int) {
-            viewHolder.itemView.textView_latest_message.text = chatMessage.text
-        }
-    }
 
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid

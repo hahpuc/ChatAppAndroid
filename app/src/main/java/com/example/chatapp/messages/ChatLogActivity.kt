@@ -37,7 +37,7 @@ class ChatLogActivity : AppCompatActivity() {
 
         //val userName = intent.getStringExtra(NewMessageActivity.USER_KEY)
         toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-        supportActionBar?.title = toUser!!.userName
+        supportActionBar?.title = toUser?.userName
 
         //setUpDummyData()
         listenForMessages()
